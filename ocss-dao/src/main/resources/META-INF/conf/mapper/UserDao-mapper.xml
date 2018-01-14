@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ocss.back.dao.mapper.UserDao">
+    <select id="verifyUser" parameterType="Map" resultType="Map">
+        SELECT
+            user_id AS userId,
+            author,
+            username
+        FROM
+            user_basic
+        WHERE username = #{username} AND pwd = #{pwd} AND user_status = 1;
+    </select>
+
+    <select id="verifyUserByUserId" parameterType="String" resultType="Map">
+        SELECT
+        user_id AS userId,
+        author,
+        username
+        FROM
+        user_basic
+        WHERE username = #{username};
+    </select>
+
+    <insert id="addUser" parameterType="Map" flushCache="true">
+        INSERT INTO user_basic (
+        username, author, pwd
+        <if test="role != null">
+            ,role
+        </if>
+        <if test="userStatus != null">
+            , user_status
+        </if>
+        ,email, create_date, update_date)
+        values(
+        #{username}, #{author}, #{pwd}
+        <if test="role != null">
+            ,#{role}
+        </if>
+        <if test="userStatus != null">
+            , #{userStatus}
+        </if>
+        ,#{email}, now(), now()
+        )
+    </insert>
+
+
+    <select id="updateUser" parameterType="Map" flushCache="true">
+        UPDATE user_basic SET
+        update_date = NOW()
+        <if test="pwd != null and pwd != ''">
+            ,pwd = #{pwd}
+        </if>
+        <if test="author != null">
+            ,author = #{author}
+        </if>
+        <if test="userStatus != null">
+            ,user_status = #{userStatus}
+        </if>
+        <if test="bisStatus != null">
+            ,bis_status = #{bisStatus}
+        </if>
+        <if test="email != null and email != ''">
+            ,email = #{email}
+        </if>
+        <if test="role != null">
+            ,role = #{role}
+        </if>
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="selectUserByUsername" parameterType="String" resultType="Map">
+        SELECT B.user_id AS userId, B.username, B.author, B.email, B.role, B.user_status As userStatus, E.points,
+          E.signature, B.update_date As updateDate, B.create_date As createDate
+          FROM user_basic B
+          LEFT JOIN user_extend E ON B.user_id = E.user_id WHERE B.username = #{username}
+    </select>
+
+    <select id="selectUserByUid" parameterType="Integer" resultType="Map">
+        SELECT B.user_id AS userId, B.username, B.author, B.email, B.role, B.user_status As userStatus, E.points,
+          E.signature, B.update_date As updateDate, B.create_date As createDate
+          FROM user_basic B
+          LEFT JOIN user_extend E ON B.user_id = E.user_id WHERE  B.user_id = #{userId}
+    </select>
+
+
+    <insert id="addExtendUserByUid" parameterType="Integer" flushCache="true">
+        INSERT INTO user_extend (
+        user_id,create_date, update_date)
+        values(
+        #{userId}, now(), now()
+        )
+    </insert>
+
+    <insert id="updateExtendUser" parameterType="Map" flushCache="true">
+        UPDATE user_extend SET
+        update_date = NOW()
+        <if test="signature != null and signature != ''">
+            ,signature = #{signature}
+        </if>
+        <if test="points != null">
+            ,points = #{points}
+        </if>
+        WHERE user_id = #{userId}
+    </insert>
+</mapper>

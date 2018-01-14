@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>ocss-back</artifactId>
+        <groupId>com.ocss.back</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>ocss-back-war</artifactId>
+    <packaging>war</packaging>
+    <groupId>com.ocss.back.war</groupId>
+    <version>1.0.0</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.ocss.back.web</groupId>
+            <artifactId>ocss-back-web</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>com.ocss.back.filter1</groupId>-->
+            <!--<artifactId>ocss-back-filter1</artifactId>-->
+            <!--<version>1.0.0</version>-->
+        <!--</dependency>-->
+
+    </dependencies>
+    <build>
+        <finalName>ocss</finalName>
+
+        <!--<plugins>-->
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-war-plugin</artifactId>-->
+                <!--<version>2.2</version>-->
+                <!--<configuration>-->
+                    <!--<webXml>webapp\WEB-INF\web.xml</webXml>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+        <!--</plugins>-->
+    </build>
+</project>
